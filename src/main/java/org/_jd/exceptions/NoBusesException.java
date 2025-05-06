@@ -1,4 +1,4 @@
-package org._jd;
+package org._jd.exceptions;
 
 public class NoBusesException extends RuntimeException{
     public NoBusesException() {

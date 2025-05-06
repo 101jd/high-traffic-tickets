@@ -1,13 +1,28 @@
-package org._jd;
+package org._jd.domain;
 
 public class Ticket {
     private int busNumber;
-    private int seatNumber;
     private double cost;
 
-    public Ticket(int busNumber, int seatNumber, double cost) {
+    public Ticket(int busNumber, double cost) {
         this.busNumber = busNumber;
-        this.seatNumber = seatNumber;
         this.cost = cost;
+    }
+
+    public int getBusNumber() {
+        return busNumber;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "busNumber=" + busNumber +
+                ", cost=" + cost +
+                '}';
     }
 }

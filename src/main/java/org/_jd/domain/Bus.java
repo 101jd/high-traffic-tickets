@@ -1,4 +1,4 @@
-package org._jd;
+package org._jd.domain;
 
 public class Bus {
     private int number;
@@ -15,5 +15,9 @@ public class Bus {
 
     public int getSeats() {
         return seats;
+    }
+
+    public void decreaseSeats(){
+        --seats;
     }
 }

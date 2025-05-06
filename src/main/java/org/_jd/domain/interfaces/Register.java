@@ -1,2 +1,5 @@
-package org._jd.domain.interfaces;public interface Register {
+package org._jd.domain.interfaces;
+
+public interface Register {
+
 }
