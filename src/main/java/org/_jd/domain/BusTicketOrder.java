@@ -1,6 +1,8 @@
 package org._jd.domain;
 
-public class BusTicketOrder {
+import org._jd.domain.interfaces.Order;
+
+public class BusTicketOrder implements Order {
     private Ticket ticket;
     private double cashBack;
 

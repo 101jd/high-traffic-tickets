@@ -1,8 +1,16 @@
 package org._jd.domain;
 
-public class Ticket {
+import org._jd.domain.interfaces.Entity;
+
+public class Ticket implements Entity {
+    private static int cnt = 10000000;
+    private int id;
     private int busNumber;
     private double cost;
+
+    {
+        this.id = ++cnt;
+    }
 
     public Ticket(int busNumber, double cost) {
         this.busNumber = busNumber;
@@ -17,6 +25,9 @@ public class Ticket {
         return cost;
     }
 
+    public int getId() {
+        return id;
+    }
 
     @Override
     public String toString() {

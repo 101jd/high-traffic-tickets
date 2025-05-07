@@ -1,6 +1,7 @@
 package org._jd.domain;
 
 import org._jd.domain.interfaces.Register;
+import org._jd.domain.interfaces.Station;
 import org._jd.exceptions.*;
 
 import java.util.ArrayList;
@@ -8,12 +9,12 @@ import java.util.List;
 import java.util.Random;
 
 public class CashRegister implements Register {
-    private BusStation busStation;
+    private Station busStation;
     private List<Ticket> tickets;
     private double cash;
     private double cost;
 
-    public CashRegister(BusStation busStation, double cost) throws NoBusesException {
+    public CashRegister(Station busStation, double cost) throws NoBusesException {
         this.busStation = busStation;
         this.tickets = new ArrayList<>();
         this.cost = cost;
@@ -21,16 +22,17 @@ public class CashRegister implements Register {
         this.cash = 0.0;
     }
 
-    private void initTickets(double cost) throws NoBusesException{
+    private List<Ticket> initTickets(double cost) throws NoBusesException{
         if (busStation.getBuses() == null || busStation.getBuses().size() < 1)
             throw new NoBusesException();
         for (Bus bus : busStation.getBuses()){
             for (int i = 1; i <= bus.getSeats(); i++)
                 this.tickets.add(new Ticket(bus.getNumber(), cost));
         }
+        return tickets;
     }
 
-    private BusTicketOrder releaseTicket(Ticket ticket, double cash) throws NotEnoughMoneyException,
+    public BusTicketOrder releaseTicket(Ticket ticket, double cash) throws NotEnoughMoneyException,
             TicketNotFoundException{
         if (cash < ticket.getCost())
             throw new NotEnoughMoneyException();
@@ -44,7 +46,7 @@ public class CashRegister implements Register {
         return new BusTicketOrder(ticket, cash - this.cost);
     }
 
-    private Ticket findTicket(int busNumber) throws WrongDataException{
+    public Ticket findTicket(int busNumber) throws WrongDataException{
         if (busNumber < 1)
             throw new WrongDataException();
         return tickets.stream().filter(ticket -> ticket.getBusNumber() == busNumber).findAny().orElse(null);
@@ -62,7 +64,7 @@ public class CashRegister implements Register {
      * @throws BusNotFoundException
      * @throws NoMoreTicketsException
      */
-    public BusTicketOrder sellTicket(int busNumber, double cash) throws WrongDataException,
+    private BusTicketOrder sellTicket(int busNumber, double cash) throws WrongDataException,
             NotEnoughMoneyException, TicketNotFoundException, NotEnoughSeatsException,
             BusNotFoundException, NoMoreTicketsException{
         if (busNumber < 1)
@@ -85,7 +87,28 @@ public class CashRegister implements Register {
 
     }
 
-    private void increaseCash(double cash){
+    public void increaseCash(double cash){
         this.cash =+ cash;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    @Override
+    public Station getStation() {
+        return this.busStation;
+    }
+
+    public double getCash() {
+        return cash;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public Station getBusStation() {
+        return busStation;
     }
 }
